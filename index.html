@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>IRRIGATION-SYSTEM-UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aldrich">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body class="light-bg">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="t-hd">IoT Based Smart Irrigation System</h1>
+                </div>
+            </div>
+            <hr>
+            <div class="row stat-row">
+                <div class="col-6 col-lg-3 col-xl-3 offset-0">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Humidity:&nbsp;<span id="temp1"></span></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-xl-3 offset-0">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Temperature:&nbsp;<span id="temp3"></span></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-xl-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Moisture:&nbsp;<span id="temp2"></span></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-xl-3">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Pump Status:&nbsp;<span id="temp4"></span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src='https://www.gstatic.com/firebasejs/6.0.0/firebase.js'></script>
+
+
+<script>
+   var firebaseConfig = {
+    apiKey: "AIzaSyBeE5pcAKBFGn5rej1Rbkx4FoUMdl5swTk",
+    authDomain: "esp8266-539ed.firebaseapp.com",
+    databaseURL: "https://esp8266-539ed.firebaseio.com",
+    projectId: "esp8266-539ed",
+    storageBucket: "esp8266-539ed.appspot.com",
+    messagingSenderId: "332391132054",
+    appId: "1:332391132054:web:77d550fd7836c1c9"
+  };
+
+    firebase.initializeApp(firebaseConfig);
+    var ref = firebase.database().ref();
+    ref.on("value", function(snapshot) {
+          console.log(snapshot.val());
+          document.getElementById("temp1").innerHTML = snapshot.val().humi+" %"; 
+          document.getElementById("temp2").innerHTML = snapshot.val().moisture+" %"; 
+          document.getElementById("temp3").innerHTML = snapshot.val().temp+" &degC"; 
+          document.getElementById("temp4").innerHTML = snapshot.val().pump_stat; 
+        }, function (error) {
+           console.log("Error: " + error.code);
+    });
+</script>
+</body>
+
+</html>
